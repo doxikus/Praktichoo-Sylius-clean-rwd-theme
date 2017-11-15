@@ -1,0 +1,34 @@
+{% extends '@SyliusShop/Account/layout.html.twig' %}
+
+{% form_theme form '@SyliusShop/Ui/Form/theme.html.twig' %}
+
+{% block breadcrumb %}
+    <a href="{{ path('sylius_shop_homepage') }}">{{ 'sylius.ui.home'|trans }}</a>
+    <a href="{{ path('sylius_shop_account_dashboard') }}">{{ 'sylius.ui.my_account'|trans }}</a>
+    {{ 'sylius.ui.personal_information'|trans }}
+{% endblock %}
+
+{% block subcontent %}
+    {{ form_start(form, {'action': path('sylius_shop_account_profile_update'), 'attr': {'class': 'ui loadable form', 'novalidate': 'novalidate'}}) }}
+    {{ 'sylius.ui.your_profile'|trans }}
+    {{ 'sylius.ui.edit_your_personal_information'|trans }}
+
+    {{ sonata_block_render_event('sylius.shop.account.profile.update.after_content_header', {'customer': customer, 'form': form}) }}
+
+    <input type="hidden" name="_method" value="PUT"/>
+
+    {{ form_row(form.firstName) }}
+    {{ form_row(form.lastName) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.birthday) }}
+    {{ form_row(form.gender) }}
+
+    {{ form_row(form.phoneNumber) }}
+    {{ form_row(form.subscribedToNewsletter) }}
+
+    {{ sonata_block_render_event('sylius.shop.account.profile.update.form', {'customer': customer, 'form': form}) }}
+
+    <button type="submit">{{ 'sylius.ui.save_changes'|trans }}</button>
+    {{ form_row(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
+{% endblock %}

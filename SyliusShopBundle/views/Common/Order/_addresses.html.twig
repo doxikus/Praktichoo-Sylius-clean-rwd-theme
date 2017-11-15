@@ -1,0 +1,8 @@
+<div id="sylius-shipping-address">
+    {{ 'sylius.ui.shipping_address'|trans }}
+    {% include '@SyliusShop/Common/_address.html.twig' with {'address': order.shippingAddress} %}
+</div>
+<div id="sylius-billing-address">
+    {{ 'sylius.ui.billing_address'|trans }}
+    {% include '@SyliusShop/Common/_address.html.twig' with {'address': order.billingAddress} %}
+</div>

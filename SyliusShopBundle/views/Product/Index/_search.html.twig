@@ -1,0 +1,9 @@
+<form method="get" action="{{ path('sylius_shop_product_index', {'slug': app.request.attributes.get('slug')}) }}">
+    {% for filter in products.definition.enabledFilters %}
+        {{ sylius_grid_render_filter(products, filter) }}
+    {% endfor %}
+    <button type="submit">{{ 'sylius.ui.search'|trans }}</button>
+    <a href="{{ path('sylius_shop_product_index', {'slug': app.request.attributes.get('slug')}) }}">
+        {{ 'sylius.ui.clear'|trans }}
+    </a>
+</form>

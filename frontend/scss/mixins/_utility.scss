@@ -1,0 +1,27 @@
+@mixin opacity($opacity) {
+    opacity: $opacity;
+    $opacity-ie: $opacity * 100;
+    filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+%hidden {
+    visibility: hidden;
+    @include opacity(0);
+}
+
+%visible {
+    visibility: visible;
+    @include opacity(1);
+}
+
+%clearfix {
+    *zoom: 1;
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}

@@ -1,0 +1,9 @@
+<div class="comment">
+
+    <a>{{ review.author.firstName }}</a>
+    {{ review.createdAt|format_date }}
+
+    <div class="star rating" data-rating="{{ review.rating }}" data-max-rating="5" style="pointer-events: none;"></div>
+
+    {{ review.comment }}
+</div>

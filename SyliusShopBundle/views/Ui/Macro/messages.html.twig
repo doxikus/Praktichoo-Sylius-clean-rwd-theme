@@ -1,0 +1,24 @@
+{% macro default(message, icon, type, header) %}
+    <div class="ui icon {{ type|default('') }} message">
+        <i class="{{ icon }} icon"></i>
+        {% if type is not empty %}
+            {{ header|default(type)|trans }}
+        {% endif %}
+        {{ message|trans }}
+    </div>
+{% endmacro %}
+
+{% macro info(message) %}
+    {% import _self as messages %}
+    {{ messages.default(message, 'info circle', 'info', 'sylius.ui.info') }}
+{% endmacro %}
+
+{% macro success(message) %}
+    {% import _self as messages %}
+    {{ messages.default(message, 'checkmark', 'success', 'sylius.ui.success') }}
+{% endmacro %}
+
+{% macro error(message) %}
+    {% import _self as messages %}
+    {{ messages.default(message, 'remove', 'negative', 'sylius.ui.error') }}
+{% endmacro %}

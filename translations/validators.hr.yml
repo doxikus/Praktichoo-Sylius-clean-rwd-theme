@@ -1,0 +1,9 @@
+# custom validators
+sylius:
+      review:
+                rating:
+                      not_blank: 'Odaberite ocjenu'
+                title:
+                      not_blank: 'Upišite naslov'
+                comment:
+                      not_blank: 'Upišite komentar'

@@ -1,0 +1,11 @@
+<div class="star rating" data-rating="0" data-max-rating="5"></div>
+{{ form_errors(form.rating) }}
+    {{ form_widget(form.rating, {'attr': {'style': 'display: none'} }) }}
+    {{ form_widget(form.title, {'attr': {'placeholder': 'sylius.ui.title'|trans} }) }}
+    {{ form_errors(form.title) }}
+    {{ form_widget(form.comment, {'attr': {'placeholder': 'sylius.ui.write_your_own_review'|trans} }) }}
+    {{ form_errors(form.comment) }}
+{% if not is_granted("IS_AUTHENTICATED_FULLY") %}
+    {{ form_widget(form.author.email, {'attr': {'placeholder': 'sylius.ui.email'|trans}}) }}
+    {{ form_errors(form.author.email) }}
+{% endif %}

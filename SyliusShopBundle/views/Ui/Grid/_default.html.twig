@@ -1,0 +1,49 @@
+{% import '@SyliusShop/Ui/Macro/pagination.html.twig' as pagination %}
+{% import '@SyliusShop/Ui/Macro/buttons.html.twig' as buttons %}
+{% import '@SyliusShop/Ui/Macro/messages.html.twig' as messages %}
+{% import '@SyliusShop/Ui/Macro/table.html.twig' as table %}
+
+{% set definition = grid.definition %}
+{% set data = grid.data %}
+
+{% set path = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+
+{% if definition.enabledFilters|length > 0 %}
+    {{ 'sylius.ui.filters'|trans }}
+    <form method="get" action="{{ path }}">
+        {% for filter in definition.enabledFilters|sort_by('position') if filter.enabled %}
+            {{ sylius_grid_render_filter(grid, filter) }}
+
+            {% if loop.index0 % 2 %}
+            {% endif %}
+        {% endfor %}
+        {{ buttons.filter() }}
+        {{ buttons.resetFilters(path) }}
+    </form>
+{% endif %}
+
+{% if definition.limits|length > 1 and data|length > min(definition.limits) %}
+    {{ pagination.simple(data) }}
+    {{ pagination.perPage(data, definition.limits) }}
+{% else %}
+    {{ pagination.simple(data) }}
+{% endif %}
+
+{% if data|length > 0 %}
+    <table>
+        <thead>
+        <tr>
+            {{ table.headers(grid, definition, app.request.attributes) }}
+        </tr>
+        </thead>
+        <tbody>
+        {% for row in data %}
+            {{ table.row(grid, definition, row) }}
+        {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    {{ messages.info('sylius.ui.no_results_to_display') }}
+{% endif %}
+
+{{ pagination.simple(data) }}

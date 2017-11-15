@@ -1,0 +1,5 @@
+{% for shipment in order.shipments %}
+    <div id="sylius-shipping-method">
+        {{ shipment.method }}
+    </div>
+{% endfor %}

@@ -1,0 +1,18 @@
+{% extends '@SyliusShop/layout.html.twig' %}
+
+{% block content %}
+    {% block breadcrumb %}
+    {% endblock %}
+
+    {{ sonata_block_render_event('sylius.shop.account.layout.before_menu') }}
+
+    {{ knp_menu_render('sylius.shop.account', {'template': '@SyliusShop/Ui/Menu/simple.html.twig'}) }}
+
+    {{ sonata_block_render_event('sylius.shop.account.layout.after_menu') }}
+    {{ sonata_block_render_event('sylius.shop.account.layout.before_subcontent') }}
+
+    {% block subcontent %}
+    {% endblock %}
+
+    {{ sonata_block_render_event('sylius.shop.account.layout.after_subcontent') }}
+{% endblock %}

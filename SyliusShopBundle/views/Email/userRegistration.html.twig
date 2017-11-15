@@ -1,0 +1,11 @@
+{% block subject %}
+    User registration
+{% endblock %}
+
+{% block body %}
+    {% autoescape %}
+        Welcome to our store!
+        You have just been registered.
+        Thank you {{ user.username }}.
+    {% endautoescape %}
+{% endblock %}

@@ -1,0 +1,5 @@
+{% for product in products %}
+    {% include '@SyliusShop/Product/_box.html.twig' %}
+    {% if 0 == loop.index % 4 %}
+    {% endif %}
+{% endfor %}

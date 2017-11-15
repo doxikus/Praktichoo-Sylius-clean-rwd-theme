@@ -1,0 +1,13 @@
+{% macro simple(paginator, options) %}
+    {% if paginator.haveToPaginate() %}
+        {{ pagerfanta(paginator, 'semantic_ui_translated', options|default({})) }}
+    {% endif %}
+{% endmacro %}
+
+{% macro perPage(paginator, paginationLimits) %}
+    {{ 'sylius.ui.show'|trans }} {{ paginator.maxPerPage }}
+    {% for limit in paginationLimits if limit != paginator.maxPerPage %}
+        {% set path = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'limit': limit})) %}
+        <a href="{{ path }}">{{ limit }}</a>
+    {% endfor %}
+{% endmacro %}

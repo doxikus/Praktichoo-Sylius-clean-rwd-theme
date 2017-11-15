@@ -1,0 +1,179 @@
+// Configurable variables
+// ⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻
+
+// Absolute height of body text, in pixels
+$base-font-size-mobile: 16px !default;
+
+// Absolute height of one line of type, in pixels
+$base-line-height-mobile: 24px !default;
+
+// The font unit to use when returning values in rhythm-mobile functions
+$rhythm-mobile-font-unit-mobile: px !default;
+
+// Allows the `adjust-font-size-to` mixin and the `lines-for-font-size-mobile` function
+// to round the line height to the nearest half line height instead of the
+// nearest integral line height to avoid large spacing between lines.
+$round-to-nearest-half-line-mobile: true !default;
+
+// Ensure there is at least this many pixels
+// of vertical padding above and below the text.
+$min-line-padding-mobile: 2px !default;
+
+
+// Constants
+// ⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻
+
+// Most (all?) browsers use a default of 16px for type.
+$browser-default-font-size-mobile: 16px;
+
+// The height of one line of type, in rems.
+$rem-line-height-mobile: $base-line-height-mobile / $base-font-size-mobile * 1rem;
+
+
+// Moving parts
+// ⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻⁻
+
+// Given pixel inputs, print rem values with pixel fallbacks.
+// Based on Bitmanic's rem mixin (https://github.com/bitmanic/rem)
+//
+// $property-mobile  - The css property name
+// $px-values-mobile - The value or values (space-separated list) for $property-mobile, in pixels
+@mixin px-to-rem-mobile($property-mobile, $px-values-mobile) {
+  // Number of pixels in 1rem (default: 16px/rem)
+  // When converting to rems, we must divide by this ratio.
+  $px-per-rem-mobile: $base-font-size-mobile / 1rem;
+
+  // Print the pixel fallback declaration first so we can override it in capable browsers.
+  #{$property-mobile}: $px-values-mobile;
+
+  // If there is only one value, print the declaration with the value converted to rems.
+  @if type-of($px-values-mobile) == "number" {
+    #{$property-mobile}: $px-values-mobile / $px-per-rem-mobile;
+  }
+  @else {
+    // Otherwise, we've got a list and we'll need to convert each value in turn.
+    // Create an empty list that we can dump values into.
+    $rem-values-mobile: ();
+    @each $value-mobile in $px-values-mobile {
+      // If the value is zero, a string or a color, leave it be.
+      @if $value-mobile == 0 or type-of($value-mobile) == "string" or type-of($value-mobile) == "color" {
+        $rem-values-mobile: append($rem-values-mobile, $value-mobile);
+      } @else {
+        $rem-values-mobile: append($rem-values-mobile, $value-mobile / $px-per-rem-mobile);
+      }
+    }
+    // Print the property and its list of converted values.
+    #{$property-mobile}: $rem-values-mobile;
+  }
+}
+
+// Return the height of n baselines.
+// Returns px or rem based on the value of $rhythm-mobile-font-unit-mobile.
+@function rhythm-mobile($lines-mobile: 1) {
+  $line-height-mobile: if($rhythm-mobile-font-unit-mobile != px, $rem-line-height-mobile, $base-line-height-mobile);
+  @return $line-height-mobile * $lines-mobile;
+}
+
+// Calculate the number of baselines required to accomodate a
+// given pixel-based font size.
+@function lines-for-font-size-mobile($font-size-mobile) {
+  $lines-mobile: if(
+                  $round-to-nearest-half-line-mobile,
+                  ceil(2 * $font-size-mobile / $base-line-height-mobile) / 2,
+                  ceil($font-size-mobile / $base-line-height-mobile)
+  );
+  @if $lines-mobile * $base-line-height-mobile - $font-size-mobile < $min-line-padding-mobile * 2 {
+    $lines-mobile: $lines-mobile + if($round-to-nearest-half-line-mobile, 0.5, 1);
+  }
+  @return $lines-mobile;
+}
+
+// Set type size and baseline grid on the root element.
+@mixin establish-baseline-mobile {
+  html {
+    $new-font-size-mobile: $base-font-size-mobile / $browser-default-font-size-mobile * 100%;	// eg. 16px ÷ 16px * 100%
+    // Only set the font size if it differs from the browser default
+    @if $new-font-size-mobile != 100% {
+      font-size: $new-font-size-mobile;
+    }
+    @include set-leading-mobile(1);
+  }
+}
+
+// Set the font size to the specified number of pixels while
+// maintaining the vertical rhythm-mobile.
+//
+// $to-size-mobile - Desired font size, in pixels
+// $lines-mobile   - Desired leading, expressed in baselines (can fractional)
+@mixin set-font-size-mobile($to-size-mobile, $lines-mobile: lines-for-font-size-mobile($to-size-mobile)) {
+  @include px-to-rem-mobile(font-size, $to-size-mobile);
+  @include set-leading-mobile($lines-mobile);
+}
+
+// Adjust the leading to a new multiple of the baseline
+@mixin set-leading-mobile($lines-mobile) {
+  @include px-to-rem-mobile(line-height, $base-line-height-mobile * $lines-mobile);
+}
+
+// Apply leading whitespace
+@mixin leader-mobile($lines-mobile: 1, $property-mobile: margin) {
+  @include px-to-rem-mobile(#{$property-mobile}-top, rhythm-mobile($lines-mobile));
+}
+
+// Apply trailing whitespace
+@mixin trailer-mobile($lines-mobile: 1, $property-mobile: margin) {
+  @include px-to-rem-mobile(#{$property-mobile}-bottom, rhythm-mobile($lines-mobile));
+}
+
+// Apply leading whitespace as padding
+@mixin padding-leader-mobile($lines-mobile: 1) {
+  @include leader-mobile($lines-mobile, padding);
+}
+
+// Apply trailing whitespace as padding
+@mixin padding-trailer-mobile($lines-mobile: 1) {
+  @include trailer-mobile($lines-mobile, padding);
+}
+
+// Apply leading and trailing whitespace together.
+// Defaults to equal margins above and below and no padding.
+@mixin rhythm-mobile-spacing($leader-mobile: 1, $trailer-mobile: $leader-mobile, $padding-leader-mobile: 0, $padding-trailer-mobile: $padding-leader-mobile) {
+  @include leader-mobile($leader-mobile);
+  @include trailer-mobile($trailer-mobile);
+  @include padding-leader-mobile($padding-leader-mobile);
+  @include padding-trailer-mobile($padding-trailer-mobile);
+}
+
+// Apply a border to one side of an element without throwing off
+// the vertical rhythm-mobile. The available space ($lines-mobile) must be
+// greater than the width of your border.
+@mixin side-rhythm-mobile-border($side-mobile, $lines-mobile: 1, $border-mobile: $rule-width-mobile $rule-style-mobile $rule-color-mobile) {
+  $width-mobile: nth($border-mobile, 1);
+  $style-mobile: nth($border-mobile, 2);
+  $color-mobile: nth($border-mobile, 3);
+  @include px-to-rem-mobile(border-#{$side-mobile}, $width-mobile $style-mobile $color-mobile);
+
+  $padding: ($base-line-height-mobile - $width-mobile) * $lines-mobile;
+  @include px-to-rem-mobile(padding-#{$side-mobile}, $padding);
+}
+
+// Apply a leading rhythm-mobile border
+@mixin leading-border-mobile($lines-mobile: 1, $border-mobile: $rule-width-mobile $rule-style-mobile $rule-color-mobile) {
+  @include side-rhythm-mobile-border(top, $lines-mobile, $border-mobile);
+}
+
+// Apply a trailing rhythm-mobile border
+@mixin trailing-border-mobile($lines-mobile: 1, $border-mobile: $rule-width-mobile $rule-style-mobile $rule-color-mobile) {
+  @include side-rhythm-mobile-border(bottom, $lines-mobile, $border-mobile);
+}
+
+// Apply borders equally to all sides with padding to maintain the vertical rhythm-mobile
+@mixin rhythm-mobile-borders($lines-mobile: 1, $border-mobile: $rule-width-mobile $rule-style-mobile $rule-color-mobile) {
+  $width-mobile: nth($border-mobile, 1);
+  $style-mobile: nth($border-mobile, 2);
+  $color-mobile: nth($border-mobile, 3);
+  @include px-to-rem-mobile(border, $width-mobile $style-mobile $color-mobile);
+
+  $padding: ($base-line-height-mobile - $width-mobile) * $lines-mobile;
+  @include px-to-rem-mobile(padding, $padding);
+}

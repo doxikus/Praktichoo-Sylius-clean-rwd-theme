@@ -1,0 +1,11 @@
+#custom flashes
+sylius:
+      user:
+          verify_email_request: 'Poslan vam je email koji sadrži link s kodom za potvrdu vašeg računa.'
+      resource:
+              create: 'Kreiranje je uspješno izvršen.'
+              update: 'Ažuriranje je uspješno izvršeno.'
+              delete: 'Brisanje uspješno izvršeno.'
+      customer:
+              set_address_as_default: 'Adresa je postavljena kao zadana'
+              add_address: 'Nova adresa je dodana'

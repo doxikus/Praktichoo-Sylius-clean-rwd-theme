@@ -1,0 +1,6 @@
+{% extends '@SyliusShop/layout.html.twig' %}
+
+{% block content %}
+    {{ 'sylius.ui.latest_products'|trans }}
+    {{ render(url('sylius_shop_partial_product_index_latest', {'count': 4, 'template': '@SyliusShop/Product/_horizontalList.html.twig'})) }}
+{% endblock %}

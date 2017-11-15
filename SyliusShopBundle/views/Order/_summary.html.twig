@@ -1,0 +1,6 @@
+{% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
+
+{{ 'sylius.ui.summary_of_your_order'|trans }} #{{ order.number }}
+{{ order.checkoutCompletedAt|date }}
+{{ money.convertAndFormat(order.total) }}
+{{ order.items|length }} {{ 'sylius.ui.items'|trans|lower }}

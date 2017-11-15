@@ -1,0 +1,9 @@
+<footer>
+    {{ sonata_block_render_event('sylius.shop.layout.before_footer') }}
+
+    {{ 'sylius.ui.your_store'|trans }}
+    {{ 'sylius.ui.customer_care'|trans }}
+    <a href="{{ path('sylius_shop_contact_request') }}">{{ 'sylius.ui.contact_us'|trans }}</a>
+
+    {{ sonata_block_render_event('sylius.shop.layout.after_footer') }}
+</footer>

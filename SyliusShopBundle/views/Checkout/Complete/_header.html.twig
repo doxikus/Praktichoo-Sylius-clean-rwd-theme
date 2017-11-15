@@ -1,0 +1,9 @@
+{% import '@SyliusShop/Ui/Macro/flags.html.twig' as flags %}
+
+{{ 'sylius.ui.summary_of_your_order'|trans }}
+<div id="sylius-order-currency-code">
+    {{ order.currencyCode }}
+</div>
+<div id="sylius-order-locale-name">
+    {{ flags.fromLocaleCode(sylius.localeCode) }}{{ sylius.localeCode|locale }}
+</div>

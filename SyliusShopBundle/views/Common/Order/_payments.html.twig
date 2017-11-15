@@ -1,0 +1,10 @@
+{% import "@SyliusShop/Common/Macro/money.html.twig" as money %}
+
+{% for payment in order.payments %}
+    <div id="sylius-payment-method">
+        {{ payment.method }}
+    </div>
+    <p>
+        {{ money.format(payment.amount, payment.currencyCode) }}
+    </p>
+{% endfor %}

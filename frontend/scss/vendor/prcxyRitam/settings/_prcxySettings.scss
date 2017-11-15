@@ -1,0 +1,13 @@
+$base-font-size-mobile: 16px;
+$base-line-height-mobile: 24px;
+$rhythm-font-unit-mobile: "px";
+
+$base-font-size: 18px;
+$base-line-height: 31px;
+$rhythm-font-unit: "px";
+
+@include establish-baseline-mobile;
+
+@media screen and (min-width: 992px) {
+  @include establish-baseline;
+}

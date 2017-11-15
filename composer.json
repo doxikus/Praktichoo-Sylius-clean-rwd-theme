@@ -1,0 +1,14 @@
+{
+  "name": "sylius/inchoo-rwd",
+  "authors": [
+    {
+      "name": "Luka Omrčen",
+      "email": "luka.omrcen18@gmail.com"
+    }
+  ],
+  "extra": {
+    "sylius-theme": {
+      "title": "inchoo-rwd"
+    }
+  }
+}
