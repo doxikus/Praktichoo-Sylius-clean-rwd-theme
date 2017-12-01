@@ -1,9 +1,9 @@
-$base-font-size-mobile: 16px;
-$base-line-height-mobile: 24px;
+$base-font-size-mobile: 15px;
+$base-line-height-mobile: 20px;
 $rhythm-font-unit-mobile: "px";
 
 $base-font-size: 18px;
-$base-line-height: 31px;
+$base-line-height: 27px;
 $rhythm-font-unit: "px";
 
 @include establish-baseline-mobile;

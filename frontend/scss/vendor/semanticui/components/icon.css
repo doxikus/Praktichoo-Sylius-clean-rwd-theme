@@ -2486,7 +2486,7 @@ i.icon.internet.explorer:before {
 i.icon.contao:before {
   content: "\f26d";
 }
-i.icon.\35 00px:before {
+i.icon.\35px:before {
   content: "\f26e";
 }
 i.icon.amazon:before {
@@ -3308,9 +3308,4 @@ i.icon.times.rectangle:before {
 i.icon.times.rectangle.outline:before {
   content: "\f2d4";
 }
-
-
-/*******************************
-         Site Overrides
-*******************************/
 

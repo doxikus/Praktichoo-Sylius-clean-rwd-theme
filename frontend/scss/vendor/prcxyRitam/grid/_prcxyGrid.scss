@@ -28,7 +28,6 @@ $show-grid-backgrounds            : true                        !default;
   @return $gradient;
 }
 
-/* ========Mobile grid========= */
 
 // Set the height of your baseline grid
 $grid-background-baseline-height-mobile  : $base-line-height-mobile           !default;
@@ -43,11 +42,4 @@ $grid-background-baseline-height-mobile  : $base-line-height-mobile           !d
     background-size: 100% $baseline;
     background-position: left top;
   }
-}
-
-.container {
-  color: blue;
-  width: 100%;
-  width: 10px;
-  color: #007bff;
 }

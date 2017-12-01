@@ -38,7 +38,7 @@ gulp.task('browser-sync', function () {
 });
 
 gulp.task('uglify', function (cb) {
-    gulp.src(['./frontend/js/vendor/*.js', './frontend/js/*.js'])
+    gulp.src(['./frontend/js/vendor/*.js','./frontend/js/sylius/*.js','./frontend/js/*.js'])
         .pipe(uglify())
         .pipe(concat('style.js'))
         .pipe(gulp.dest('./../../../web/bundles/_themes/sylius/inchoo-rwd/syliusshop/js/'))
